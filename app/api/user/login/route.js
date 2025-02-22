@@ -25,7 +25,7 @@ export async function POST(request) {
             .setExpirationTime("1d")
             .sign(secretKey)
         console.log(token)
-        return NextResponse.json({message: "ログイン成功"})
+        return NextResponse.json({message: "ログイン成功", token: token})
     } catch (error) {
         console.log(error)
         return NextResponse.json({message: "ログイン失敗"})
