@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";   // トークン判定に使用
 
 export async function middleware(request) {
-    // フロント側でき次第修正
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAZnJvbnQuY29tIiwiZXhwIjoxNzQwMjM0MDY5fQ.04bgU_sCMRbPQQl7TlyP_7ME2mBka2P5wNZCU_psAr8"
-    // const token = request.headers.get("Authorization")?.split(" ")[1];
+    // ?はナチュラルチェーン
+    const token = request.headers.get("Authorization")?.split(" ")[1];
     if (!token) {
         return NextResponse.json({message: "トークンがありません"})
     }

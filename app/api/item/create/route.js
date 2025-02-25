@@ -8,8 +8,8 @@ export async function POST(request) {
     try {
         await connectDB()
         await ItemModel.create(reqBody)
-        return NextResponse.json({message:"Success!"})
+        return NextResponse.json({message:"アイテム作成成功！"})
     } catch {
-        return NextResponse.json({message:"Failed!"})
+        return NextResponse.json({message:"アイテム作成失敗！"})
     }
 }

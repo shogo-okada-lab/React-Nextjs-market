@@ -2,7 +2,7 @@ import Image from "next/image"
 
 const getSingleItem = async(itemId) => {
     // JSのコードを書くためにバッククオート+ ${}を使用する
-    const response = await fetch(`http://localhost:3000/api/item/readSingle/${itemId}`)
+    const response = await fetch(`http://localhost:3000/api/item/readSingle/${itemId}`, {cache: "no-cache"})
     const jsonData = await response.json()
     return jsonData.singleItem
 }
