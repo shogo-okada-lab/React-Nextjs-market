@@ -11,7 +11,7 @@ const register = () => {
         // イベントに対するデフォルトの動作を止めるメソッド(リロード阻止)
         e.preventDefault()
         try {
-            const response = await fetch("http://localhost:3000/api/user/register", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/register`, {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -33,7 +33,7 @@ const register = () => {
 
     return (
         <div>
-            <h1>ユーザー登録</h1>
+            <h1 className="page-title">ユーザー登録</h1>
             <form onSubmit={handleSubmit}>
                 {/* inputに入力されたデータはeの中に　それをnameにデータを書き込むsetNameに渡している */}
                 <input value={name} onChange={(e) => setName(e.target.value)} type="text" name="name" placeholder="名前" required></input>

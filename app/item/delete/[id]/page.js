@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";    //作成後、トップページ移動で使用
+import Image from "next/image";
 import useAuth from "@/app/utils/useAuth";
 
-const updateItem = (context) => {
+const deleteItem = (context) => {
     const [title, setTitle] = useState("")
     const [price, setPrice] = useState("")
     const [image, setImage] = useState("")
     const [description, setDescription] = useState("")
     const [email, setEmail] = useState("")
-    // 「編集権限がありません。」が写らないように
     const [loading, setLoading] = useState("")
 
     const router = useRouter()
@@ -37,8 +37,8 @@ const updateItem = (context) => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/item/update/${context.params.id}`, {
-                method: "PUT",
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/item/delete/${context.params.id}`, {
+                method: "DELETE",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
@@ -47,10 +47,6 @@ const updateItem = (context) => {
                 },
                 // JSON形式に
                 body: JSON.stringify({
-                    title: title,
-                    price: price,
-                    image: image,
-                    description: description,
                     email: loginUserEmail
                 })
             })
@@ -59,7 +55,7 @@ const updateItem = (context) => {
             router.push("/")
             router.refresh()
         } catch (error) {
-            alert("アイテム編集に失敗しました。")
+            alert("アイテム削除に失敗しました。")
         }
     }
 
@@ -70,21 +66,21 @@ const updateItem = (context) => {
     }
     if (loginUserEmail != email) {
         return (
-            <h1>編集権限がありません。</h1>
+            <h1>削除権限がありません。</h1>
         )
     }
     return (
         <div>
-            <h1 className="page-title">アイテム編集</h1>
+            <h1 className="page-title">アイテム削除</h1>
             <form onSubmit={handleSubmit}>
-                <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="title" placeholder="アイテム名" required></input>
-                <input value={price} onChange={(e) => setPrice(e.target.value)} type="text" name="price" placeholder="価格" required></input>
-                <input value={image} onChange={(e) => setImage(e.target.value)} type="text" name="image" placeholder="画像" required></input>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} name="description" rows={15} placeholder="商品説明" required></textarea>
-                <button>編集</button>
+                <h2>{title}</h2>
+                <Image src={image} width={750} height={500} alt="item-image" priority/>
+                <h3>{price}円</h3>
+                <p>{description}</p>
+                <button>削除</button>
             </form>
         </div>
     )
 }
 
-export default updateItem
+export default deleteItem
