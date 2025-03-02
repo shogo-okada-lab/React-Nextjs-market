@@ -1,6 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
 
+export async function generateMetaData(context) {
+    const singleItem = await getSingleItem(context.params.id)
+    return {
+        title: singleItem.title,
+        description: singleItem.description
+    }
+}
+
 const getSingleItem = async(itemId) => {
     // JSのコードを書くためにバッククオート+ ${}を使用する
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/item/readSingle/${itemId}`, {cache: "no-cache"})
